@@ -274,7 +274,6 @@
             <li><a href="#experience">Experience</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#skills">Skills</a></li>
-            <li><a href="#reviews">Reviews</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
@@ -286,7 +285,7 @@
 
     <section id="about">
         <div class="container">
-            <img src="http://snehithganesh.neocities.org/IMG_0201%20copy.jpg" alt="Sangamitra Senthil Kumar" class="profile-photo" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=Profile+Photo';">
+            <img src="images/profile-photo.jpg" alt="Sangamitra Senthil Kumar" class="profile-photo" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=Profile+Photo';">
             <h2>About Me</h2>
             <p>Hi there! Nice to meet you! With almost 2.5 years of experience in turning creative ideas into reality, I have never stopped learning to become the best version of myself. I believe that with my keen eye for art and excellent skills, we can make great strides together towards a promising future. I can’t wait to become a part of your team!</p>
             <p>My work spans graphic design, digital art, portraits, pencil sketches, watercolor and acrylic painting, and vector art. I approach every project with creativity, attention to detail, and passion.</p>
@@ -393,6 +392,21 @@
                         <p><strong>Learnings:</strong> Enhanced animation and storytelling skills.</p>
                     </div>
                 </div>
+                <div class="project-card card">
+                    <div class="project-header">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>KiddoWise</h3>
+                        <p>Educational Platform for Kids</p>
+                    </div>
+                    <button class="accordion">Details</button>
+                    <div class="panel">
+                        <p><strong>Description:</strong> A web platform to support children's learning with interactive subjects, safety features, and parental controls.</p>
+                        <p><strong>Role:</strong> Lead Designer and Developer</p>
+                        <p><strong>Technologies:</strong> HTML, CSS, JavaScript</p>
+                        <p><strong>Outcomes:</strong> Deployed a live site at <a href="https://sangamitra31.github.io/kiddowise31/" style="color: #ffcc00;">KiddoWise</a>, enhancing educational access for kids.</p>
+                        <p><strong>Learnings:</strong> Improved skills in responsive design and user-friendly interfaces.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -412,30 +426,6 @@
                 <div class="card">
                     <h3>Tools</h3>
                     <p>Figma, Adobe Creative Suite, MAYA, Blender, Procreate</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="reviews">
-        <div class="container">
-            <h2>Client Reviews</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Akash</h3>
-                    <p>Amazing artwork! Sangamitra brought my vision to life with creativity.</p>
-                </div>
-                <div class="card">
-                    <h3>Jayasree</h3>
-                    <p>Stunning and professional designs. Thrilled with the results!</p>
-                </div>
-                <div class="card">
-                    <h3>Viswa</h3>
-                    <p>Exceptional work. A talented artist and pleasure to work with.</p>
-                </div>
-                <div class="card">
-                    <h3>Prasanth</h3>
-                    <p>Perfectly customized artwork. Highly recommend her!</p>
                 </div>
             </div>
         </div>
@@ -461,7 +451,9 @@
                 e.preventDefault();
                 const targetId = this.getAttribute('href').substring(1);
                 const targetSection = document.getElementById(targetId);
-                gsap.to(window, { duration: 1, scrollTo: { y: targetSection.offsetTop, autoKill: false }, ease: "power2.out" });
+                if (targetSection) {
+                    gsap.to(window, { duration: 1, scrollTo: { y: targetSection.offsetTop, autoKill: false }, ease: "power2.out" });
+                }
             });
         });
 
@@ -477,19 +469,30 @@
             });
         });
 
-        const accordions = document.getElementsByClassName('accordion');
-        for (let i = 0; i < accordions.length; i++) {
-            accordions[i].addEventListener('click', function() {
-                this.classList.toggle('active');
+        const accordions = document.querySelectorAll('.accordion');
+        accordions.forEach(accordion => {
+            accordion.addEventListener('click', function() {
                 const panel = this.nextElementSibling;
-                if (panel.style.maxHeight) {
+                const isOpen = panel.style.maxHeight && panel.style.maxHeight !== '0px';
+
+                accordions.forEach(otherAccordion => {
+                    const otherPanel = otherAccordion.nextElementSibling;
+                    if (otherPanel !== panel) {
+                        otherPanel.style.maxHeight = null;
+                        otherAccordion.classList.remove('active');
+                    }
+                });
+
+                if (isOpen) {
                     panel.style.maxHeight = null;
+                    this.classList.remove('active');
                 } else {
                     panel.style.maxHeight = panel.scrollHeight + 'px';
+                    this.classList.add('active');
+                    gsap.from(panel, { maxHeight: 0, duration: 0.5, ease: "power2.out" });
                 }
-                gsap.from(panel, { maxHeight: 0, duration: 0.5, ease: "power2.out" });
             });
-        }
+        });
     </script>
 </body>
 </html>
