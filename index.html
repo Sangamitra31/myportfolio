@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sangamitra Senthil Kumar - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #0a0c1d 0%, #1a2b4b 100%);
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 12, 29, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        nav ul li {
+            margin: 0 2rem;
+        }
+        nav ul li a {
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        nav ul li a:hover {
+            color: #20c997;
+            transform: scale(1.1);
+        }
+        section {
+            padding: 6rem 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: #ffcc00;
+            text-transform: uppercase;
+        }
+        h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #fff;
+            position: relative;
+        }
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(90deg, #ffcc00, #20c997);
+            border-radius: 2px;
+        }
+        p {
+            max-width: 900px;
+            margin: 0 auto 1.5rem;
+            font-size: 1.2rem;
+            color: #ddd;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(10, 12, 29, 0.8), rgba(26, 43, 75, 0.8)), url('images/image1.png') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 1;
+        }
+        .hero h1 {
+            font-size: 6rem;
+            letter-spacing: 2px;
+        }
+        .hero p {
+            font-size: 1.6rem;
+            color: #ffcc00;
+        }
+        .profile-photo {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 2rem auto;
+            border: 5px solid #ffcc00;
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .profile-photo:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(32, 201, 151, 0.7);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            width: 100%;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        .project-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            transition: transform 0.4s ease;
+        }
+        .project-header {
+            height: 250px;
+            background: linear-gradient(135deg, #1a2b4b 0%, #20c997 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            position: relative;
+            padding: 1rem;
+        }
+        .project-header h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            z-index: 1;
+        }
+        .project-header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            z-index: 1;
+        }
+        .project-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 0;
+        }
+        .project-header i {
+            font-size: 3.5rem;
+            opacity: 0.2;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .accordion {
+            background: linear-gradient(90deg, #ffcc00, #20c997);
+            color: #fff;
+            cursor: pointer;
+            padding: 1rem 1.5rem;
+            border: none;
+            text-align: center;
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+            border-radius: 25px;
+            margin: 1rem auto;
+            display: block;
+            width: 80%;
+        }
+        .accordion:hover {
+            background: linear-gradient(90deg, #20c997, #ffcc00);
+        }
+        .panel {
+            padding: 0 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            border-radius: 0 0 15px 15px;
+        }
+        .panel p {
+            padding: 1rem 0;
+            font-size: 1rem;
+            color: #ddd;
+        }
+        .contact a {
+            color: #ffcc00;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-size: 1.2rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .contact a:hover {
+            color: #20c997;
+            transform: scale(1.1);
+        }
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                text-align: center;
+            }
+            nav ul li {
+                margin: 1rem 0;
+            }
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            h1 {
+                font-size: 3rem;
+            }
+            h2 {
+                font-size: 2.2rem;
+            }
+            .profile-photo {
+                width: 180px;
+                height: 180px;
+            }
+            .project-header {
+                height: 200px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <h1>Sangamitra Senthil Kumar</h1>
+        <p>Graphic Design & Illustrator | @lumos.arena</p>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <img src="http://snehithganesh.neocities.org/IMG_0201%20copy.jpg" alt="Sangamitra Senthil Kumar" class="profile-photo" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=Profile+Photo';">
+            <h2>About Me</h2>
+            <p>Hi there! Nice to meet you! With almost 2.5 years of experience in turning creative ideas into reality, I have never stopped learning to become the best version of myself. I believe that with my keen eye for art and excellent skills, we can make great strides together towards a promising future. I can’t wait to become a part of your team!</p>
+            <p>My work spans graphic design, digital art, portraits, pencil sketches, watercolor and acrylic painting, and vector art. I approach every project with creativity, attention to detail, and passion.</p>
+        </div>
+    </section>
+
+    <section id="education">
+        <div class="container">
+            <h2>Education</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Northeastern University - CPS</h3>
+                    <p>MPS in Informatics</p>
+                    <p>Currently Studying</p>
+                </div>
+                <div class="card">
+                    <h3>IIT-Bangalore</h3>
+                    <p>Data Science</p>
+                    <p>CGPA: 3.36</p>
+                </div>
+                <div class="card">
+                    <h3>Jansons Institute of Technology</h3>
+                    <p>B.E. Computer Science Engineering</p>
+                    <p>CGPA: 9.10 (91%)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <div class="container">
+            <h2>Experience</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>VDart</h3>
+                    <p>Senior Executive Digital and Graphic Designer</p>
+                    <p>September 2024 - Present</p>
+                </div>
+                <div class="card">
+                    <h3>PRoots Pvt. Ltd.</h3>
+                    <p>SAP ABAP Developer</p>
+                    <p>August 2022 - February 2023</p>
+                </div>
+                <div class="card">
+                    <h3>Factana Computing Pvt. Ltd.</h3>
+                    <p>Full-Stack Developer (Internship)</p>
+                    <p>May 2022 - July 2022</p>
+                </div>
+                <div class="card">
+                    <h3>IEEE Volunteer & Member</h3>
+                    <p>Various leadership roles including JIT IEEE WIE Member, GDC Organizer</p>
+                    <p>2020 - 2023</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2>My Art Space</h2>
+            <div class="grid">
+                <div class="project-card card">
+                    <div class="project-header">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Estrovo - Mini Project</h3>
+                        <p>Android App for Travelers</p>
+                    </div>
+                    <button class="accordion">Details</button>
+                    <div class="panel">
+                        <p><strong>Description:</strong> An Android app for travelers, offering safety features and weather predictions.</p>
+                        <p><strong>Role:</strong> Lead Developer and UI Designer</p>
+                        <p><strong>Technologies:</strong> Java, XML, HMS Toolkits, HMS Core App</p>
+                        <p><strong>Outcomes:</strong> Developed a functional app with real-time weather updates.</p>
+                        <p><strong>Learnings:</strong> Gained expertise in mobile app development.</p>
+                    </div>
+                </div>
+                <div class="project-card card">
+                    <div class="project-header">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>Fastech - Project</h3>
+                        <p>Fashion Trend Recommender</p>
+                    </div>
+                    <button class="accordion">Details</button>
+                    <div class="panel">
+                        <p><strong>Description:</strong> A web app using MERN stack to address mis-matched reviews.</p>
+                        <p><strong>Role:</strong> Full-Stack Developer</p>
+                        <p><strong>Technologies:</strong> React.js, Node.js, MongoDB, Express.js, JWT</p>
+                        <p><strong>Outcomes:</strong> Built a scalable web app with authentication.</p>
+                        <p><strong>Learnings:</strong> Mastered MERN stack integration.</p>
+                    </div>
+                </div>
+                <div class="project-card card">
+                    <div class="project-header">
+                        <i class="fas fa-film"></i>
+                        <h3>Movie Production</h3>
+                        <p>Storyboard & Animation</p>
+                    </div>
+                    <button class="accordion">Details</button>
+                    <div class="panel">
+                        <p><strong>Description:</strong> Storyboard, posters, and intro video for a creative project.</p>
+                        <p><strong>Role:</strong> Graphic Designer and Animator</p>
+                        <p><strong>Technologies:</strong> Adobe Creative Suite, Blender, After Effects</p>
+                        <p><strong>Outcomes:</strong> Delivered appealing assets for a short film.</p>
+                        <p><strong>Learnings:</strong> Enhanced animation and storytelling skills.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="container">
+            <h2>Skills</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Design</h3>
+                    <p>Visual Design, Wireframe & Prototyping, Redesigning, UX/UI Research</p>
+                </div>
+                <div class="card">
+                    <h3>Tech</h3>
+                    <p>Python, C, JavaScript, HTML, CSS, SQL, MERN Stack, Gen AI, Google Cloud</p>
+                </div>
+                <div class="card">
+                    <h3>Tools</h3>
+                    <p>Figma, Adobe Creative Suite, MAYA, Blender, Procreate</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews">
+        <div class="container">
+            <h2>Client Reviews</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Akash</h3>
+                    <p>Amazing artwork! Sangamitra brought my vision to life with creativity.</p>
+                </div>
+                <div class="card">
+                    <h3>Jayasree</h3>
+                    <p>Stunning and professional designs. Thrilled with the results!</p>
+                </div>
+                <div class="card">
+                    <h3>Viswa</h3>
+                    <p>Exceptional work. A talented artist and pleasure to work with.</p>
+                </div>
+                <div class="card">
+                    <h3>Prasanth</h3>
+                    <p>Perfectly customized artwork. Highly recommend her!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2>Contact Me</h2>
+            <p class="contact">
+                <a href="mailto:sangamitra248@gmail.com">Email: sangamitra248@gmail.com</a> | 
+                <a href="https://www.instagram.com/lumos.arena">Instagram: @lumos.arena</a> | 
+                <a href="https://github.com/sangamitra31">GitHub</a>
+            </p>
+            <p>Thank you for scrolling down! I’m looking forward to hearing from you.</p>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                gsap.to(window, { duration: 1, scrollTo: { y: targetSection.offsetTop, autoKill: false }, ease: "power2.out" });
+            });
+        });
+
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => {
+            ScrollTrigger.create({
+                trigger: section,
+                start: "top 80%",
+                onEnter: () => section.classList.add('visible'),
+                onEnterBack: () => section.classList.add('visible'),
+                onLeave: () => section.classList.remove('visible'),
+                onLeaveBack: () => section.classList.remove('visible')
+            });
+        });
+
+        const accordions = document.getElementsByClassName('accordion');
+        for (let i = 0; i < accordions.length; i++) {
+            accordions[i].addEventListener('click', function() {
+                this.classList.toggle('active');
+                const panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + 'px';
+                }
+                gsap.from(panel, { maxHeight: 0, duration: 0.5, ease: "power2.out" });
+            });
+        }
+    </script>
+</body>
+</html>
